@@ -30,7 +30,6 @@ int16_t mx, my, mz;
 int precision = 8;
 float Pa=0;
 float TC=0;
-bool blinkState = false;
 float angle = 0;
 float gxout;
 float gyout;
@@ -38,8 +37,6 @@ float gzout;
 float axout;
 float ayout;
 float azout;
-int mode;
-int n;
 
 char output[512];
 
