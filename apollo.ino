@@ -113,5 +113,7 @@ void gyroscope() {
 }
 
 void print() {
-  SerialUSB.println("we are printing serial bro");
+  char output[512];
+  sprintf(output, "{temperature: %f}", TC);
+  SerialUSB.println(output);
 }
