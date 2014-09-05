@@ -39,6 +39,7 @@ float ayout;
 float azout;
 
 char output[512];
+char input[512];
 
 
 void setup() {
@@ -60,6 +61,8 @@ void setup() {
  
 
 void loop() {
+  delay(1000);
+
   pressure();
   temperature();
   acceleration();
@@ -69,9 +72,20 @@ void loop() {
 }
 
 void read() {
-  int a = SerialUSB.read();
-  SerialUSB.println("\n\n\n\n\n\n READ:");
-  SerialUSB.println(a);
+  int index = 0;
+  char inChar;
+
+  while(SerialUSB.available() > 0) {
+    if(index < 19) {
+      inChar = SerialUSB.read(); // Read a character
+      input[index] = inChar; // Store it
+      index++; // Increment where to write next
+      input[index] = '\0'; // Null terminate the string
+    }
+  }
+
+  SerialUSB.println("\n\n\n\n\n\n READ:  ");
+  SerialUSB.println(input);
   SerialUSB.println("\n\n\n\n\n\n");
 }
 
