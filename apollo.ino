@@ -38,52 +38,27 @@ float gzout;
 float axout;
 float ayout;
 float azout;
-int i=0;
-String string;
 int mode;
 int n;
 
+char output[512];
+
 
 void setup() {
-  // join I2C bus (I2Cdev library doesn't do this automatically)
   Wire.begin();
 
   // initialize serial communication
-  // (38400 chosen because it works as well at 8MHz as it does at 16MHz, but
-  // it's really up to you depending on your project)
   while (!SerialUSB);
   SerialUSB.begin(115200);
-  
-  /*SerialUSB.println('a');
-  int a = 'b';
-  
-  while (a!='a')
-  {
-    a=SerialUSB.read();
-  }
-*/
-  // initialize device
-  //SerialUSB.println("Initializing I2C devices...");
   accelgyro.initialize();
 
   // verify connection
-  
   SerialUSB.println("Could not find a valid BMP085 sensor, check wiring!");
 
   if (!bmp.begin()) {
-	SerialUSB.println("Could not find a valid BMP085 sensor, check wiring!");
-	while (1) {}
+    SerialUSB.println("Could not find a valid BMP085 sensor, check wiring!");
+    while (1) {}
   }
-
-  pinMode(10, OUTPUT);
-
-  pinMode(LED_PIN, OUTPUT);
-  pinMode(bottomRight, INPUT);
-  digitalWrite(bottomRight, HIGH);
-  pinMode(topRight, INPUT);
-  digitalWrite(topRight, HIGH);
-  
-  pinMode(13,OUTPUT);
 }
  
 
@@ -113,7 +88,6 @@ void gyroscope() {
 }
 
 void print() {
-  char output[512];
-  sprintf(output, "{temperature: %f}", TC);
+  sprintf(output, "{\ntemperature: %f\npressure: %f\n}", TC, Pa);
   SerialUSB.println(output);
 }
