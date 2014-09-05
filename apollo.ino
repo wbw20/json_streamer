@@ -65,7 +65,14 @@ void loop() {
   acceleration();
   gyroscope();
 
-  print();
+  read();
+}
+
+void read() {
+  int a = SerialUSB.read();
+  SerialUSB.println("\n\n\n\n\n\n READ:");
+  SerialUSB.println(a);
+  SerialUSB.println("\n\n\n\n\n\n");
 }
 
 void pressure() {
