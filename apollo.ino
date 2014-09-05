@@ -11,6 +11,7 @@
 // for both classes must be in the include path of your project
 #include "I2Cdev.h"
 #include "MPU6050.h"
+#include "parson.h"
 #include <Adafruit_BMP085.h>
 
 // class default I2C address is 0x68
@@ -87,10 +88,12 @@ void setup() {
  
 
 void loop() {
-  digitalWrite(13,HIGH);
-  digitalWrite(13,LOW);
-  blinkState = !blinkState;
-  digitalWrite(LED_PIN, blinkState);
+  pressure();
+  temperature();
+  acceleration();
+  gyroscope();
+
+  print();
 }
 
 void pressure() {
@@ -107,4 +110,8 @@ void acceleration() {
 
 void gyroscope() {
   accelgyro.getRotation(&gx, &gy, &gz);
+}
+
+void print() {
+  SerialUSB.println("we are printing serial bro");
 }
