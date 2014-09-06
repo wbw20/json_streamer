@@ -19,6 +19,22 @@ This is the operating system for Apollo.  The following api can be used over USB
 }
 ```
 
+```code
+{
+  "command": "pinMode",
+  "pin": 13,
+  "mode": 1
+}
+```
+
+```code
+{
+  "command": "digitalWrite",
+  "pin": 13,
+  "mode": 0
+}
+```
+
 ## Expirimental API
 
 ```code
