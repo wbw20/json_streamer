@@ -18,3 +18,17 @@ This is the operating system for Apollo.  The following api can be used over USB
   "command": "pressure"
 }
 ```
+
+## Expirimental API
+
+```code
+{
+  "command": "log",
+  "sensors": [
+    "temperature",
+    "humidity",
+    "pressure"
+  ],
+  "frequency": 100
+}
+```
