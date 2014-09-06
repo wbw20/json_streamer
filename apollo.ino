@@ -58,20 +58,32 @@ void setup() {
     while (1) {}
   }
 }
- 
+
 
 void loop() {
-  delay(3000);
+  waitForCommand();
 
-  pressure();
-  temperature();
-  acceleration();
-  gyroscope();
-
-  read();
-  parse(input);
+  // do some logic here
 }
 
+/*
+ *  Block the event loop to wait for input
+ */
+void waitForCommand() {
+  JSON_Object *object;
+  while((object = parse(input)) == NULL) {
+    read();
+  }
+
+  /* clear input array */
+  memset(input, 0, 512);
+
+  SerialUSB.println(json_object_get_string(object, "message"));
+}
+
+/*
+ *  Read whatever is on the serial line
+ */
 void read() {
   int index = 0;
   char inChar;
@@ -84,12 +96,12 @@ void read() {
       input[index] = '\0'; // Null terminate the string
     }
   }
-
-  SerialUSB.print("READ:  ");
-  SerialUSB.println(input);
 }
 
-JSON_Value* parse(const char *input) {
+/*
+ *  Parse a string into a JSON object
+ */
+JSON_Object* parse(const char *input) {
   JSON_Value *root;
   JSON_Object *object;
   size_t i;
@@ -97,15 +109,11 @@ JSON_Value* parse(const char *input) {
   /* parsing json and validating output */
   root = json_parse_string(input);
   object = json_value_get_object(root);
-  if (false) {
-    SerialUSB.print("failed to parse:");
-    SerialUSB.println(input);
+  if (json_value_get_type(root) == JSONError) {
     return NULL;
   }
 
-  SerialUSB.println(json_object_get_string(object, "message"));
-
-  return root;
+  return object;
 }
 
 void pressure() {
