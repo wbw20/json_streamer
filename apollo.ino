@@ -70,6 +70,14 @@ void loop() {
   } else if (stringEquals(command, "pressure")) {
     pressure();
     print();
+  } else if (stringEquals(command, "pinMode")) {
+    uint8_t pin = (uint8_t)json_object_get_number(object, "pin");
+    uint8_t mode = (uint8_t)json_object_get_number(object, "mode");
+    setPinMode(pin, mode);
+  } else if (stringEquals(command, "digitalWrite")) {
+    uint8_t pin = (uint8_t)json_object_get_number(object, "pin");
+    int value = (int)json_object_get_number(object, "value");
+    digitalWrite(pin, value);
   } else {
     SerialUSB.println("fuck dude, idk...");
   }
@@ -127,6 +135,20 @@ JSON_Object* parse(const char *input) {
   }
 
   return object;
+}
+
+/*
+ *  Set a pin as an input or output
+ */
+void setPinMode(uint8_t pin, uint8_t mode) {
+  pinMode(pin, mode);
+}
+
+/*
+ *  Set a pin as high or low
+ */
+void setPinValue(uint8_t pin, uint8_t value) {
+  digitalWrite(pin, value);
 }
 
 void pressure() {
