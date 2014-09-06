@@ -61,7 +61,7 @@ void setup() {
  
 
 void loop() {
-  delay(1000);
+  delay(3000);
 
   pressure();
   temperature();
@@ -69,6 +69,7 @@ void loop() {
   gyroscope();
 
   read();
+  parse(input);
 }
 
 void read() {
@@ -76,7 +77,7 @@ void read() {
   char inChar;
 
   while(SerialUSB.available() > 0) {
-    if(index < 19) {
+    if(index < 511) {
       inChar = SerialUSB.read(); // Read a character
       input[index] = inChar; // Store it
       index++; // Increment where to write next
@@ -84,9 +85,27 @@ void read() {
     }
   }
 
-  SerialUSB.println("\n\n\n\n\n\n READ:  ");
+  SerialUSB.print("READ:  ");
   SerialUSB.println(input);
-  SerialUSB.println("\n\n\n\n\n\n");
+}
+
+JSON_Value* parse(const char *input) {
+  JSON_Value *root;
+  JSON_Object *object;
+  size_t i;
+
+  /* parsing json and validating output */
+  root = json_parse_string(input);
+  object = json_value_get_object(root);
+  if (false) {
+    SerialUSB.print("failed to parse:");
+    SerialUSB.println(input);
+    return NULL;
+  }
+
+  SerialUSB.println(json_object_get_string(object, "message"));
+
+  return root;
 }
 
 void pressure() {
