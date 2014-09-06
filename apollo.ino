@@ -61,15 +61,28 @@ void setup() {
 
 
 void loop() {
-  waitForCommand();
+  JSON_Object *object = waitForCommand();
+  const char *command = json_object_get_string(object, "command");
 
-  // do some logic here
+  if (stringEquals(command, "temperature")) {
+    temperature();
+    print();
+  } else if (stringEquals(command, "pressure")) {
+    pressure();
+    print();
+  } else {
+    SerialUSB.println("fuck dude, idk...");
+  }
+}
+
+bool stringEquals(const char *first, const char *second) {
+  return strcmp(first, second) == 0;
 }
 
 /*
  *  Block the event loop to wait for input
  */
-void waitForCommand() {
+JSON_Object* waitForCommand() {
   JSON_Object *object;
   while((object = parse(input)) == NULL) {
     read();
@@ -78,7 +91,7 @@ void waitForCommand() {
   /* clear input array */
   memset(input, 0, 512);
 
-  SerialUSB.println(json_object_get_string(object, "message"));
+  return object;
 }
 
 /*
