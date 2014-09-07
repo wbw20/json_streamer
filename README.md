@@ -13,6 +13,13 @@ This is the operating system for Apollo.  The following api can be used over USB
 }
 ```
 
+```code
+{
+  "command": "data",
+  "format": "csv"
+}
+```
+
 
 ```code
 {
