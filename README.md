@@ -9,15 +9,10 @@ This is the operating system for Apollo.  The following api can be used over USB
 
 ```code
 {
-  "command": "temperature"
+  "command": "data"
 }
 ```
 
-```code
-{
-  "command": "pressure"
-}
-```
 
 ```code
 {
@@ -46,5 +41,11 @@ This is the operating system for Apollo.  The following api can be used over USB
     "pressure"
   ],
   "frequency": 100
+}
+```
+
+```code
+{
+  "command": "pressure"
 }
 ```
