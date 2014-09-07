@@ -27,16 +27,8 @@ int16_t ax, ay, az;
 int16_t gx, gy, gz;
 int16_t mx, my, mz;
 
-int precision = 8;
-float Pa=0;
-float TC=0;
-float angle = 0;
-float gxout;
-float gyout;
-float gzout;
-float axout;
-float ayout;
-float azout;
+float p;
+float t;
 
 char output[512];
 char input[512];
@@ -64,11 +56,11 @@ void loop() {
   JSON_Object *object = waitForCommand();
   const char *command = json_object_get_string(object, "command");
 
-  if (stringEquals(command, "temperature")) {
-    temperature();
-    print();
-  } else if (stringEquals(command, "pressure")) {
+  if (stringEquals(command, "data")) {
     pressure();
+    temperature();
+    acceleration();
+    gyroscope();
     print();
   } else if (stringEquals(command, "pinMode")) {
     uint8_t pin = (uint8_t)json_object_get_number(object, "pin");
@@ -152,11 +144,11 @@ void setPinValue(uint8_t pin, uint8_t value) {
 }
 
 void pressure() {
-  Pa=bmp.readPressure();
+  p = bmp.readPressure();
 }
 
 void temperature() {
-  TC=bmp.readTemperature();
+  t = bmp.readTemperature();
 }
 
 void acceleration() {
@@ -168,6 +160,7 @@ void gyroscope() {
 }
 
 void print() {
-  sprintf(output, "{\ntemperature: %f\npressure: %f\n}", TC, Pa);
+  // sprintf(output, "first: %f\nsecond: %f %f %f %f %f %f", 1.0, 2.0, 0, 0, 0, 6.0, 7.0);
+  sprintf(output, "{\naccelerometer: {\nx: %i,\ny: %i,\nz: %i\n},\ngyroscope: {\nx: %i,\ny: %i,\nz: %i\n},\ntemperature: %f,\npressure: %f\n}", ax, ay, az, gx, gy, gz, t, p);
   SerialUSB.println(output);
 }
