@@ -155,7 +155,6 @@ void motion() {
 }
 
 void print() {
-  // sprintf(output, "first: %f\nsecond: %f %f %f %f %f %f", 1.0, 2.0, 0, 0, 0, 6.0, 7.0);
-  sprintf(output, "{\naccelerometer: {\nx: %i,\ny: %i,\nz: %i\n},\ngyroscope: {\nx: %i,\ny: %i,\nz: %i\n},\ntemperature: %f,\npressure: %f\n}", ax, ay, az, gx, gy, gz, t, p);
+  sprintf(output, "{\naccelerometer: {\nx: %i,\ny: %i,\nz: %i\n},\ngyroscope: {\nx: %i,\ny: %i,\nz: %i\n},\nmagnetometer: {\nx: %i,\ny: %i,\nz: %i\n},\ntemperature: %f,\npressure: %f\n}", ax, ay, az, gx, gy, gz, mx, my, mz, t, p);
   SerialUSB.println(output);
 }
