@@ -59,8 +59,7 @@ void loop() {
   if (stringEquals(command, "data")) {
     pressure();
     temperature();
-    acceleration();
-    gyroscope();
+    motion();
     print();
   } else if (stringEquals(command, "pinMode")) {
     uint8_t pin = (uint8_t)json_object_get_number(object, "pin");
@@ -151,12 +150,8 @@ void temperature() {
   t = bmp.readTemperature();
 }
 
-void acceleration() {
-  accelgyro.getAcceleration(&ax, &ay, &az);
-}
-
-void gyroscope() {
-  accelgyro.getRotation(&gx, &gy, &gz);
+void motion() {
+  accelgyro.getMotion9(&ax, &ay, &az, &gx, &gy, &gz, &mx, &my, &mz);
 }
 
 void print() {
