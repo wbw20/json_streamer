@@ -155,6 +155,6 @@ void motion() {
 }
 
 void print() {
-  sprintf(output, "{\naccelerometer: {\nx: %i,\ny: %i,\nz: %i\n},\ngyroscope: {\nx: %i,\ny: %i,\nz: %i\n},\nmagnetometer: {\nx: %i,\ny: %i,\nz: %i\n},\ntemperature: %f,\npressure: %f\n}", ax, ay, az, gx, gy, gz, mx, my, mz, t, p);
+  sprintf(output, "{\n\"accelerometer\": {\n\"x\": %i,\n\"y\": %i,\n\"z\": %i\n},\n\"gyroscope\": {\n\"x\": %i,\n\"y\": %i,\n\"z\": %i\n},\n\"magnetometer\": {\n\"x\": %i,\n\"y\": %i,\n\"z\": %i\n},\n\"temperature\": %f,\n\"pressure\": %f\n}", ax, ay, az, gx, gy, gz, mx, my, mz, t, p);
   SerialUSB.println(output);
 }
